@@ -1,5 +1,4 @@
 <?php
-
 class ExcelReaderXML {
 
 	/**
@@ -68,18 +67,14 @@ class ExcelReaderXML {
 			
 			// open tags
 			if ($this->xml->nodeType == XMLReader::ELEMENT) {
-				//echo "<br>{$this->xml->name} === ";
-				//print_r($this->tagStack);
 				if ($this->xml->name == 'Cell' && $this->tagStack[1] == 'Row')
 					$row['CellInfo'][$colid] = $this->readAttrs();
 				if ($this->xml->name == 'Data' && $this->tagStack[1] == 'Cell' && $this->tagStack[2] == 'Row') {
 					$row['CellInfo'][$colid] += $this->readAttrs(); // append data types
 					$row['Data'][$colid] = html_entity_decode($this->xml->readInnerXml());
-					//print_r($row);
 				}
 			} // nodeType == XMLReader::ELEMENT
 		}
 		return false;
 	}
-
 }
